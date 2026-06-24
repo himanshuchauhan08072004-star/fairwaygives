@@ -1,0 +1,21 @@
+'use client'
+
+import { useRouter, usePathname } from 'next/navigation'
+
+export default function BackButton() {
+  const router = useRouter()
+  const pathname = usePathname()
+
+  // Don't show on the main overview page — there's nowhere meaningful to go back to
+  if (pathname === '/dashboard') return null
+
+  return (
+    <button
+      onClick={() => router.back()}
+      aria-label="Go back"
+      className="flex items-center gap-1.5 rounded-full border border-neutral-700 px-3 py-1.5 text-sm text-neutral-300 transition-all hover:border-neutral-500 hover:bg-neutral-800 hover:-translate-x-0.5"
+    >
+      <span aria-hidden>←</span> Back
+    </button>
+  )
+}

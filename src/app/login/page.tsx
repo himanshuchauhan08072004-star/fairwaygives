@@ -34,12 +34,16 @@ function LoginForm() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center px-6">
-      <div className="w-full max-w-sm">
+    <main className="relative flex min-h-screen items-center justify-center overflow-hidden px-6">
+      <div className="absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-500/10 blur-3xl animate-pulse-slow" />
+      <div className="relative w-full max-w-sm animate-fade-up">
+        <Link href="/" className="mb-8 inline-block bg-gradient-to-r from-emerald-400 to-emerald-300 bg-clip-text text-xl font-extrabold text-transparent">
+          FairwayGives
+        </Link>
         <h1 className="text-2xl font-bold">Welcome back</h1>
         {justSignedUp && (
-          <p className="mt-2 rounded-lg bg-emerald-500/10 px-3 py-2 text-sm text-emerald-400">
-            Account created. If email confirmation is enabled, check your inbox before logging in.
+          <p className="mt-3 animate-fade-up rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 text-sm text-emerald-400">
+            ✓ Account created. If email confirmation is enabled, check your inbox before logging in.
           </p>
         )}
 
@@ -51,7 +55,7 @@ function LoginForm() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 w-full rounded-lg border border-neutral-700 bg-neutral-900 px-3 py-2 outline-none focus:border-emerald-500"
+              className="mt-1 w-full rounded-lg border border-neutral-700 bg-neutral-900 px-3 py-2 outline-none transition-all focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
             />
           </div>
           <div>
@@ -61,16 +65,16 @@ function LoginForm() {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 w-full rounded-lg border border-neutral-700 bg-neutral-900 px-3 py-2 outline-none focus:border-emerald-500"
+              className="mt-1 w-full rounded-lg border border-neutral-700 bg-neutral-900 px-3 py-2 outline-none transition-all focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
             />
           </div>
 
-          {error && <p className="text-sm text-red-400">{error}</p>}
+          {error && <p className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-400">{error}</p>}
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-lg bg-emerald-500 px-4 py-2 font-semibold text-neutral-950 transition hover:bg-emerald-400 disabled:opacity-50"
+            className="w-full rounded-lg bg-gradient-to-r from-emerald-500 to-emerald-400 px-4 py-2 font-semibold text-neutral-950 transition-transform hover:scale-[1.02] disabled:opacity-50 disabled:hover:scale-100"
           >
             {loading ? 'Logging in...' : 'Log in'}
           </button>
@@ -78,7 +82,7 @@ function LoginForm() {
 
         <p className="mt-6 text-center text-sm text-neutral-400">
           Don't have an account?{' '}
-          <Link href="/signup" className="text-emerald-400 hover:underline">Sign up</Link>
+          <Link href="/signup" className="font-medium text-emerald-400 hover:underline">Sign up</Link>
         </p>
       </div>
     </main>

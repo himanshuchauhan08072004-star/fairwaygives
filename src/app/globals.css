@@ -19,3 +19,11 @@ html {
 .animate-fade-up {
   animation: fadeUp 0.6s ease-out both;
 }
+
+@keyframes pulseSlow {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.8; }
+}
+.animate-pulse-slow {
+  animation: pulseSlow 4s ease-in-out infinite;
+}
