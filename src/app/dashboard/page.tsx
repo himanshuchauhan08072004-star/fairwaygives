@@ -6,13 +6,21 @@ export default async function DashboardPage() {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return null
 
-  const [{ data: profile }, { data: subscription }, { data: scores }, { data: charity }, { data: winnings }] =
-    await Promise.all([
+ const [
+    { data: profile },
+    { data: subscription, error: subError },
+    { data: scores },
+    { data: charity },
+    { data: winnings },
+  ] = await Promise.all([
       supabase.from('profiles').select('*').eq('id', user.id).single(),
       supabase.from('subscriptions').select('*').eq('user_id', user.id).order('created_at', { ascending: false }).limit(1).maybeSingle(),
       supabase.from('scores').select('*').eq('user_id', user.id).order('played_on', { ascending: false }),
       supabase.from('profiles').select('charity_id, charity_contribution_pct, charities(name)').eq('id', user.id).single(),
       supabase.from('winners').select('*').eq('user_id', user.id),
+    ])
+
+  if (subError) console.error('Dashboard subscription query error:', subError)
     ])
 
   const isActive = subscription?.status === 'active'
