@@ -21,7 +21,6 @@ export default async function DashboardPage() {
     ])
 
   if (subError) console.error('Dashboard subscription query error:', subError)
-    ])
 
   const isActive = subscription?.status === 'active'
   const totalWon = (winnings ?? []).reduce((sum, w) => sum + Number(w.amount), 0)
