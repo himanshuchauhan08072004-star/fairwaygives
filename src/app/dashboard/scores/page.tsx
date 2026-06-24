@@ -1,10 +1,11 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+
 function formatDate(dateStr: string) {
-     const [year, month, day] = dateStr.split('-').map(Number)
-     return `${day}/${month}/${year}`
-   }
+  const [year, month, day] = dateStr.split('-').map(Number)
+  return `${day}/${month}/${year}`
+}
 
 interface ScoreRow {
   id: string
@@ -71,13 +72,13 @@ export default function ScoresPage() {
       <div>
         <h1 className="text-2xl font-bold">Your Scores</h1>
         <p className="mt-1 text-sm text-neutral-400">
-         Log your last 5 rounds (Stableford, 1-45). Adding a 6th score automatically drops your oldest. One score per date.
+          Log your last 5 rounds (Stableford, 1-45). Adding a 6th score automatically drops your oldest. One score per date.
         </p>
       </div>
 
       <form onSubmit={handleAdd} className="flex flex-wrap items-end gap-4 rounded-2xl border border-neutral-800 bg-neutral-900/50 p-6">
         <div>
-         <label className="block text-sm text-neutral-400">Score (1-45)</label>
+          <label className="block text-sm text-neutral-400">Score (1-45)</label>
           <input
             type="number"
             min={1}
@@ -112,55 +113,57 @@ export default function ScoresPage() {
         ) : scores.length === 0 ? (
           <p className="p-6 text-neutral-400">No scores logged yet.</p>
         ) : (
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-neutral-800 text-left text-sm text-neutral-400">
-                <th className="px-6 py-3">Date</th>
-                <th className="px-6 py-3">Score</th>
-                <th className="px-6 py-3"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {scores.map((s) => (
-                <tr key={s.id} className="border-b border-neutral-800/50">
-                  <td className="px-6 py-3">{formatDate(s.played_on)}</td>
-                  <td className="px-6 py-3">
-                    {editingId === s.id ? (
-                      <input
-                        type="number"
-                        min={1}
-                        max={45}
-                        value={editValue}
-                        onChange={(e) => setEditValue(e.target.value)}
-                        className="w-20 rounded border border-neutral-700 bg-neutral-900 px-2 py-1"
-                      />
-                    ) : (
-                      s.score
-                    )}
-                  </td>
-                  <td className="px-6 py-3 text-right">
-                    {editingId === s.id ? (
-                      <button onClick={() => handleEditSave(s.id)} className="text-sm text-emerald-400 hover:underline">
-                        Save
-                      </button>
-                    ) : (
-                      <div className="flex justify-end gap-4">
-                        <button
-                          onClick={() => { setEditingId(s.id); setEditValue(String(s.score)) }}
-                          className="text-sm text-neutral-400 hover:text-neutral-200"
-                        >
-                          Edit
-                        </button>
-                        <button onClick={() => handleDelete(s.id)} className="text-sm text-red-400 hover:text-red-300">
-                          Delete
-                        </button>
-                      </div>
-                    )}
-                  </td>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-neutral-800 text-left text-sm text-neutral-400">
+                  <th className="px-6 py-3">Date</th>
+                  <th className="px-6 py-3">Score</th>
+                  <th className="px-6 py-3"></th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {scores.map((s) => (
+                  <tr key={s.id} className="border-b border-neutral-800/50">
+                    <td className="px-6 py-3">{formatDate(s.played_on)}</td>
+                    <td className="px-6 py-3">
+                      {editingId === s.id ? (
+                        <input
+                          type="number"
+                          min={1}
+                          max={45}
+                          value={editValue}
+                          onChange={(e) => setEditValue(e.target.value)}
+                          className="w-20 rounded border border-neutral-700 bg-neutral-900 px-2 py-1"
+                        />
+                      ) : (
+                        s.score
+                      )}
+                    </td>
+                    <td className="px-6 py-3 text-right">
+                      {editingId === s.id ? (
+                        <button onClick={() => handleEditSave(s.id)} className="text-sm text-emerald-400 hover:underline">
+                          Save
+                        </button>
+                      ) : (
+                        <div className="flex justify-end gap-4">
+                          <button
+                            onClick={() => { setEditingId(s.id); setEditValue(String(s.score)) }}
+                            className="text-sm text-neutral-400 hover:text-neutral-200"
+                          >
+                            Edit
+                          </button>
+                          <button onClick={() => handleDelete(s.id)} className="text-sm text-red-400 hover:text-red-300">
+                            Delete
+                          </button>
+                        </div>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
     </div>
