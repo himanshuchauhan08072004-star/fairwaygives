@@ -22,8 +22,8 @@ export async function POST(req: NextRequest) {
       const userId = session.metadata?.user_id
       const plan = session.metadata?.plan as 'monthly' | 'yearly'
       if (!userId) break
-
-      const subscription = await stripe.subscriptions.retrieve(session.subscription as string)
+const subscription = await stripe.subscriptions.retrieve(session.subscription as string)
+      const item = subscription.items.data[0] as any
 
       await supabase.from('subscriptions').insert({
         user_id: userId,
@@ -31,23 +31,22 @@ export async function POST(req: NextRequest) {
         status: 'active',
         stripe_customer_id: session.customer as string,
         stripe_subscription_id: subscription.id,
-        current_period_start: new Date(subscription.items.data[0].current_period_start * 1000).toISOString(),
-        current_period_end: new Date(subscription.items.data[0].current_period_end * 1000).toISOString(),
+        current_period_start: new Date(item.current_period_start * 1000).toISOString(),
+        current_period_end: new Date(item.current_period_end * 1000).toISOString(),
       })
       break
     }
 
     case 'customer.subscription.updated': {
       const sub = event.data.object as Stripe.Subscription
-      const status = sub.status === 'active' ? 'active' : sub.status === 'canceled' ? 'cancelled' : 'lapsed'
-
-      await supabase
+      const item = sub.items.data[0] as any
+      const status = sub.status === 'active' ? 'active' : sub.status === 'canceled' ? 'cancelled' : 'lapsed'      await supabase
         .from('subscriptions')
         .update({
           status,
           cancel_at_period_end: sub.cancel_at_period_end,
-          current_period_start: new Date(sub.items.data[0].current_period_start * 1000).toISOString(),
-          current_period_end: new Date(sub.items.data[0].current_period_end * 1000).toISOString(),
+        current_period_start: new Date(item.current_period_start * 1000).toISOString(),
+          current_period_end: new Date(item.current_period_end * 1000).toISOString(),
         })
         .eq('stripe_subscription_id', sub.id)
       break
