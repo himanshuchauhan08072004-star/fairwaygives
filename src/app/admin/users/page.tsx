@@ -3,10 +3,12 @@ import UserRow from './UserRow'
 
 export default async function AdminUsersPage() {
   const supabase = createAdminClient()
-  const { data: profiles } = await supabase
+ const { data: profiles, error } = await supabase
     .from('profiles')
-    .select('*, subscriptions(status, plan)')
+    .select('*, subscriptions!subscriptions_user_id_fkey(status, plan)')
     .order('created_at', { ascending: false })
+
+  if (error) console.error('Admin users query error:', error)
 
   return (
     <div className="space-y-6">

@@ -3,12 +3,14 @@ import { createAdminClient } from '@/lib/supabase/admin'
 export default async function AdminOverviewPage() {
   const supabase = createAdminClient()
 
-  const [{ count: totalUsers }, { count: activeSubs }, { data: draws }, { data: donations }] = await Promise.all([
+  const [{ count: totalUsers }, { data: allSubs }, { data: draws }, { data: donations }] = await Promise.all([
     supabase.from('profiles').select('*', { count: 'exact', head: true }),
-    supabase.from('subscriptions').select('*', { count: 'exact', head: true }).eq('status', 'active'),
+    supabase.from('subscriptions').select('status'),
     supabase.from('draws').select('total_pool, status'),
     supabase.from('donations').select('amount'),
   ])
+
+  const activeSubs = (allSubs ?? []).filter((s) => s.status === 'active').length
 
   const totalPool = (draws ?? []).reduce((sum, d) => sum + Number(d.total_pool), 0)
   const charityTotal = (donations ?? []).reduce((sum, d) => sum + Number(d.amount), 0)
