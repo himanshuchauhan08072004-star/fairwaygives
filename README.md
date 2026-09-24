@@ -2,6 +2,8 @@
 
 Built for Digital Heroes' full-stack trainee selection challenge, based on the provided PRD.
 
+## LIVE - https://fairwaygiveshimanshugolfff.vercel.app/
+
 ## Tech stack
 
 - **Framework:** Next.js 15 (App Router, TypeScript)
