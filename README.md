@@ -91,4 +91,4 @@ Given the 2-day window, these were deprioritized and are documented here rather 
 - [x] Admin dashboard — users, draws, charities, winners, reports
 - [x] Responsive layout (mobile-first Tailwind)
  ## Himanshu Chauhan
- 
+ ## himanshuchauhan08072004@gmail.com
