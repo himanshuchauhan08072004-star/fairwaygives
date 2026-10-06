@@ -2,7 +2,7 @@
 
 Built for Digital Heroes' full-stack trainee selection challenge, based on the provided PRD.
 
-## LIVE - https://fairwaygiveshimanshugolfff.vercel.app/
+# LIVE - https://fairwaygiveshimanshugolfff.vercel.app/
 
 ## Tech stack
 
@@ -90,3 +90,5 @@ Given the 2-day window, these were deprioritized and are documented here rather 
 - [x] User dashboard — all PRD-required modules present
 - [x] Admin dashboard — users, draws, charities, winners, reports
 - [x] Responsive layout (mobile-first Tailwind)
+ ## Himanshu Chauhan
+ 
